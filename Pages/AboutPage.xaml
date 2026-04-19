@@ -1,0 +1,35 @@
+<Page x:Class="RecoilHelper.Pages.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      Background="#0D0D0F">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Width="400" HorizontalAlignment="Center">
+            <Border Width="80" Height="80" CornerRadius="40" Background="#1A1A2A" Margin="0,0,0,24">
+                <Image Source="/Assets/logo.png" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+
+            <TextBlock x:Name="TxtAppTitle" Text="Republic Mabar" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="TxtAppVersion" Text="Anti Bergetar" FontSize="14" Foreground="#5865F2" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+
+            <Border Background="#12121E" CornerRadius="12" BorderBrush="#1E1E30" BorderThickness="1" Margin="0,32,0,0" Padding="20">
+                <StackPanel>
+                    <TextBlock x:Name="TxtAppDesc" Text="Aplikasi recoil helper portable yang dirancang untuk komunitas Republic Mabar. Dilengkapi dengan 3-stage recoil engine." 
+                               Foreground="#8080A0" FontSize="13" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20"/>
+                    
+                    <Rectangle Height="1" Fill="#1E1E30" Margin="0,20,0,20"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Discord Community" Width="160" Margin="0,0,8,0" Click="BtnDiscord_Click"
+                                Background="#5865F2" Foreground="White" ui:ControlHelper.CornerRadius="8"/>
+                        <Button Content="Check Updates" Width="160" Click="BtnUpdate_Click"
+                                Background="#1A1B1E" Foreground="White" ui:ControlHelper.CornerRadius="8"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Name="TxtFooter" Text="Developed by lonetzy with ❤️ for Republic Mabar" FontSize="11" Foreground="#3A3A5A" HorizontalAlignment="Center" Margin="0,40,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page>

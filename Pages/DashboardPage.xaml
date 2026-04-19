@@ -1,0 +1,432 @@
+<Page x:Class="RecoilHelper.Pages.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      Background="#0D0D0F">
+
+    <Page.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#12121E"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BorderBrush" Value="#1E1E30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="18"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7070A0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="108"/>
+        </Style>
+
+        <Style x:Key="UnitLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#4A4A6A"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="65"/>
+            <Setter Property="Margin" Value="6,0,0,0"/>
+        </Style>
+
+        <!-- NumericBox custom style -->
+        <Style x:Key="NumericBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#0A0A18"/>
+            <Setter Property="BorderBrush" Value="#252540"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#D0D0EE"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Width" Value="72"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="#7C6AF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Padding="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#7C6AF5"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#4A4A70"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Slider custom style -->
+        <Style x:Key="PurpleSlider" TargetType="Slider">
+            <Setter Property="Foreground" Value="#7C6AF5"/>
+            <Setter Property="Background" Value="#252540"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+        </Style>
+
+        <!-- Reset button style -->
+        <Style x:Key="ResetBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1A1A2E"/>
+            <Setter Property="BorderBrush" Value="#2A2A45"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#6060A0"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#2A1A1A"/>
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#9A4040"/>
+                                <Setter Property="Foreground" Value="#E06060"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#3A1515"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="22,16,22,16">
+        <StackPanel>
+
+            <!-- Header -->
+            <StackPanel Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TxtDashTitle" Text="Dashboard" FontSize="22" FontWeight="Bold"
+                                   Foreground="#E8E8FF"
+                                   FontFamily="Segoe UI Variable Display, Segoe UI"/>
+                        <TextBlock x:Name="TxtDashDesc" Text="Konfigurasi dan kontrol recoil"
+                                   FontSize="12" Foreground="#4A4A6A" Margin="0,3,0,0"/>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="BtnImport" ToolTip="Import Profile" Margin="0,0,4,0" Padding="8,5" Cursor="Hand" Click="BtnImport_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⬇" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TxtBtnImport" Text="Import" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnExport" ToolTip="Export Profile" Margin="0,0,8,0" Padding="8,5" Cursor="Hand" Click="BtnExport_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="6"/>
+                                </Style>
+                            </Button.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⬆" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TxtBtnExport" Text="Export" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <TextBox x:Name="EProfileNote" ui:ControlHelper.PlaceholderText="Note (M4..)" Style="{StaticResource NumericBox}" Width="110" VerticalAlignment="Center" TextAlignment="Left" TextChanged="EProfileNote_TextChanged" Padding="8,5" Margin="0,0,8,0" ToolTip="Catatan Nama Senjata Profil"/>
+                        <ComboBox x:Name="ComboProfile" VerticalAlignment="Center" Width="130"
+                                  SelectionChanged="ComboProfile_SelectionChanged" Margin="0,0,8,0">
+                            <ComboBoxItem Content="Profile 1"/>
+                            <ComboBoxItem Content="Profile 2"/>
+                            <ComboBoxItem Content="Profile 3"/>
+                            <ComboBoxItem Content="Profile 4"/>
+                            <ComboBoxItem Content="Profile 5"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <!-- RECOIL CONTROL CARD -->
+            <Border Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TxtRecoilControl" Text="RECOIL CONTROL" FontSize="10" FontWeight="Bold"
+                                   Foreground="#4A4A6A"/>
+                        <TextBlock x:Name="TxtHotkeyHint" FontSize="11"
+                                   Foreground="#3A3A5A" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <ui:ToggleSwitch x:Name="ToggleRecoil" Grid.Column="1"
+                                     VerticalAlignment="Center"
+                                     Toggled="ToggleRecoil_Toggled"
+                                     OnContent="" OffContent=""/>
+                </Grid>
+            </Border>
+
+            <!-- ========== ENTRY 1 ========== -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <!-- Header row -->
+                    <!-- Header row Entry 1 -->
+                    <Grid Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="22" Height="22" CornerRadius="6" Background="#7C6AF5">
+                                <TextBlock Text="1" FontSize="11" FontWeight="Bold"
+                                           Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Entry 1" FontSize="14" FontWeight="SemiBold"
+                                       Foreground="#C0C0E0" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Style="{StaticResource ResetBtnStyle}"
+                                Click="BtnReset1_Click"
+                                ToolTip="Reset semua nilai Entry 1 ke 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="↺" FontSize="12" VerticalAlignment="Center"/>
+                                <TextBlock Text=" Reset" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <Rectangle Height="1" Fill="#1E1E30" Margin="0,0,0,12"/>
+
+                    <!-- Speed Vertical -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Speed Vertical" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E1Vertical" Style="{StaticResource NumericBox}"
+                                 TextChanged="E1Vertical_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px/cycle" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL1Vertical"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL1Vertical_ValueChanged"/>
+                    </Grid>
+
+                    <!-- Duration -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Duration" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E1Duration" Style="{StaticResource NumericBox}"
+                                 TextChanged="E1Duration_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="ms" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL1Duration"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="10000" SmallChange="10" LargeChange="100"
+                                ValueChanged="SL1Duration_ValueChanged"/>
+                    </Grid>
+
+                    <!-- Horizontal -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Horizontal" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E1Horizontal" Style="{StaticResource NumericBox}"
+                                 TextChanged="E1Horizontal_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px (±)" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL1Horizontal"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="-100" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL1Horizontal_ValueChanged"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ========== ENTRY 2 ========== -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <!-- Header row Entry 2 -->
+                    <Grid Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="22" Height="22" CornerRadius="6" Background="#5A4AE0">
+                                <TextBlock Text="2" FontSize="11" FontWeight="Bold"
+                                           Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Entry 2" FontSize="14" FontWeight="SemiBold"
+                                       Foreground="#C0C0E0" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Style="{StaticResource ResetBtnStyle}"
+                                Click="BtnReset2_Click"
+                                ToolTip="Reset semua nilai Entry 2 ke 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="↺" FontSize="12" VerticalAlignment="Center"/>
+                                <TextBlock Text=" Reset" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <Rectangle Height="1" Fill="#1E1E30" Margin="0,0,0,12"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Speed Vertical" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E2Vertical" Style="{StaticResource NumericBox}"
+                                 TextChanged="E2Vertical_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px/cycle" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL2Vertical"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL2Vertical_ValueChanged"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Duration" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E2Duration" Style="{StaticResource NumericBox}"
+                                 TextChanged="E2Duration_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="ms" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL2Duration"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="10000" SmallChange="10" LargeChange="100"
+                                ValueChanged="SL2Duration_ValueChanged"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Horizontal" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E2Horizontal" Style="{StaticResource NumericBox}"
+                                 TextChanged="E2Horizontal_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px (±)" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL2Horizontal"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="-100" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL2Horizontal_ValueChanged"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ========== ENTRY 3 ========== -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <!-- Header row Entry 3 -->
+                    <Grid Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="22" Height="22" CornerRadius="6" Background="#3A3AB0">
+                                <TextBlock Text="3" FontSize="11" FontWeight="Bold"
+                                           Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Entry 3" FontSize="14" FontWeight="SemiBold"
+                                       Foreground="#C0C0E0" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Style="{StaticResource ResetBtnStyle}"
+                                Click="BtnReset3_Click"
+                                ToolTip="Reset semua nilai Entry 3 ke 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="↺" FontSize="12" VerticalAlignment="Center"/>
+                                <TextBlock Text=" Reset" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <Rectangle Height="1" Fill="#1E1E30" Margin="0,0,0,12"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Speed Vertical" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E3Vertical" Style="{StaticResource NumericBox}"
+                                 TextChanged="E3Vertical_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px/cycle" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL3Vertical"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL3Vertical_ValueChanged"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Duration" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E3Duration" Style="{StaticResource NumericBox}"
+                                 TextChanged="E3Duration_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="ms" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL3Duration"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="0" Maximum="10000" SmallChange="10" LargeChange="100"
+                                ValueChanged="SL3Duration_ValueChanged"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="108"/>
+                            <ColumnDefinition Width="72"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Horizontal" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Column="1" x:Name="E3Horizontal" Style="{StaticResource NumericBox}"
+                                 TextChanged="E3Horizontal_TextChanged"/>
+                        <TextBlock Grid.Column="2" Text="px (±)" Style="{StaticResource UnitLabel}"/>
+                        <Slider Grid.Column="3" x:Name="SL3Horizontal"
+                                Style="{StaticResource PurpleSlider}"
+                                Minimum="-100" Maximum="100" SmallChange="0.5" LargeChange="2"
+                                ValueChanged="SL3Horizontal_ValueChanged"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+
+
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

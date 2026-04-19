@@ -1,0 +1,349 @@
+<Page x:Class="RecoilHelper.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      Background="#0D0D0F">
+
+    <Page.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#13131F"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BorderBrush" Value="#1E1E30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,14"/>
+        </Style>
+
+        <Style x:Key="TabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8080A0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Root" Background="Transparent"
+                                BorderThickness="0,0,0,2"
+                                BorderBrush="Transparent"
+                                Margin="0,0,4,0">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#7C6AF5"/>
+                                <Setter Property="Foreground" Value="#C0B0FF"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#1A1A2E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HotkeyBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1E1E30"/>
+            <Setter Property="BorderBrush" Value="#2A2A45"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#A0A0C0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#7C6AF5"/>
+                                <Setter Property="Foreground" Value="#C0B0FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#252540"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RowCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#0D0D1A"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="#1E1E30"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,14"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24,20,24,20">
+        <StackPanel>
+
+            <!-- Header -->
+            <StackPanel Margin="0,0,0,16">
+                <TextBlock x:Name="TxtSettingsTitle" Text="Settings" FontSize="24" FontWeight="Bold"
+                           Foreground="#FFFFFF"
+                           FontFamily="Segoe UI Variable Display, Segoe UI"/>
+                <TextBlock x:Name="TxtSettingsDesc" Text="Preferensi aplikasi dan hotkey" FontSize="13"
+                           Foreground="#5A5A7A" Margin="0,3,0,0"/>
+            </StackPanel>
+
+            <!-- Tab Control -->
+            <Border Background="#13131F" CornerRadius="12"
+                    BorderBrush="#1E1E30" BorderThickness="1">
+                <TabControl Background="Transparent" BorderThickness="0"
+                            Padding="0">
+                    <TabControl.Template>
+                        <ControlTemplate TargetType="TabControl">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="#1E1E30"
+                                        BorderThickness="0,0,0,1" Padding="12,0">
+                                    <TabPanel IsItemsHost="True"/>
+                                </Border>
+                                <ContentPresenter Grid.Row="1"
+                                                  ContentSource="SelectedContent"
+                                                  Margin="0"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </TabControl.Template>
+
+                    <!-- TAB GENERAL -->
+                    <TabItem x:Name="TabGeneral" Header="  ⚙  General  " Style="{StaticResource TabItemStyle}">
+                        <StackPanel Margin="20,16,20,20">
+
+                            <!-- Sound Effect -->
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock x:Name="TxtSoundTitle" Text="Sound Effect" FontSize="14"
+                                                   FontWeight="SemiBold" Foreground="#D0D0E8"/>
+                                        <TextBlock x:Name="TxtSoundDesc" Text="Putar suara saat toggle recoil on/off"
+                                                   FontSize="12" Foreground="#606080"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <ComboBox x:Name="ComboSound" VerticalAlignment="Center" Width="130" Margin="0,0,12,0"
+                                                  SelectionChanged="ComboSound_SelectionChanged">
+                                            <ComboBoxItem Content="Variation 1" Tag="0"/>
+                                            <ComboBoxItem Content="Variation 2" Tag="1"/>
+                                            <ComboBoxItem Content="Variation 3" Tag="2"/>
+                                        </ComboBox>
+                                        <ui:ToggleSwitch x:Name="ToggleSound" 
+                                                         VerticalAlignment="Center"
+                                                         OnContent="" OffContent=""
+                                                         Toggled="ToggleSound_Toggled"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Language -->
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock x:Name="TxtLangTitle" Text="Bahasa / Language" FontSize="14"
+                                                   FontWeight="SemiBold" Foreground="#D0D0E8"/>
+                                        <TextBlock x:Name="TxtLangDesc" Text="Pilih bahasa antarmuka"
+                                                   FontSize="12" Foreground="#606080"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                    <ComboBox x:Name="ComboLang" Grid.Column="1" VerticalAlignment="Center" Width="130"
+                                              SelectionChanged="ComboLang_SelectionChanged">
+                                        <ComboBoxItem Content="Indonesia" Tag="ID"/>
+                                        <ComboBoxItem Content="English" Tag="EN"/>
+                                        <ComboBoxItem Content="العربية" Tag="AR"/>
+                                    </ComboBox>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </TabItem>
+
+                    <!-- TAB HOTKEY -->
+                    <TabItem x:Name="TabHotkey" Header="  ⌨  Hotkey  " Style="{StaticResource TabItemStyle}">
+                        <StackPanel Margin="20,16,20,20">
+
+                            <!-- Info banner -->
+                            <Border Background="#1A1020" CornerRadius="8"
+                                    BorderBrush="#3A2050" BorderThickness="1"
+                                    Padding="14,10" Margin="0,0,0,12">
+                                <TextBlock x:Name="TxtHotkeyBanner" TextWrapping="Wrap" FontSize="12" Foreground="#8060A0"
+                                           Text="Klik tombol lalu tekan key atau mouse button yang diinginkan. Mendukung keyboard (F1–F12, dll.) dan mouse (Mouse1–Mouse5)."/>
+                            </Border>
+
+                            <!-- Toggle On/Off -->
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock x:Name="TxtToggleTitle" Text="Toggle Recoil On/Off" FontSize="14"
+                                                   FontWeight="SemiBold" Foreground="#D0D0E8"/>
+                                        <TextBlock x:Name="TxtToggleDesc" Text="Tekan sekali untuk nyalakan/matikan"
+                                                   FontSize="12" Foreground="#606080"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                        <Button x:Name="BtnToggleKey"
+                                                Style="{StaticResource HotkeyBtnStyle}"
+                                                Click="BtnToggleKey_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}"
+                                                MinWidth="32" Padding="4,7"
+                                                Click="BtnToggleKeyReset_Click"
+                                                Margin="8,0,0,0"
+                                                ToolTip="Reset ke default (F6)"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Activate Recoil -->
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock x:Name="TxtActivateTitle" Text="Aktifkan Recoil (Tahan)" FontSize="14"
+                                                   FontWeight="SemiBold" Foreground="#D0D0E8"/>
+                                        <TextBlock x:Name="TxtActivateDesc" Text="Tahan tombol ini agar recoil bekerja"
+                                                   FontSize="12" Foreground="#606080"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                        <Button x:Name="BtnActivateKey"
+                                                Style="{StaticResource HotkeyBtnStyle}"
+                                                Click="BtnActivateKey_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}"
+                                                MinWidth="32" Padding="4,7"
+                                                Click="BtnActivateKeyReset_Click"
+                                                Margin="8,0,0,0"
+                                                ToolTip="Reset ke default (Mouse1)"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <TextBlock x:Name="TxtSwitchProfiles" Text="SWITCH PROFILES" FontSize="11" FontWeight="Bold" Foreground="#4A4A6A" Margin="4,8,0,8"/>
+
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profile 1" FontSize="14" FontWeight="SemiBold" Foreground="#D0D0E8" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="BtnProfile1Key" Style="{StaticResource HotkeyBtnStyle}" Click="BtnProfile1Key_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}" MinWidth="32" Padding="4,7" Click="BtnProfile1KeyReset_Click" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profile 2" FontSize="14" FontWeight="SemiBold" Foreground="#D0D0E8" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="BtnProfile2Key" Style="{StaticResource HotkeyBtnStyle}" Click="BtnProfile2Key_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}" MinWidth="32" Padding="4,7" Click="BtnProfile2KeyReset_Click" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profile 3" FontSize="14" FontWeight="SemiBold" Foreground="#D0D0E8" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="BtnProfile3Key" Style="{StaticResource HotkeyBtnStyle}" Click="BtnProfile3Key_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}" MinWidth="32" Padding="4,7" Click="BtnProfile3KeyReset_Click" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profile 4" FontSize="14" FontWeight="SemiBold" Foreground="#D0D0E8" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="BtnProfile4Key" Style="{StaticResource HotkeyBtnStyle}" Click="BtnProfile4Key_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}" MinWidth="32" Padding="4,7" Click="BtnProfile4KeyReset_Click" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource RowCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profile 5" FontSize="14" FontWeight="SemiBold" Foreground="#D0D0E8" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button x:Name="BtnProfile5Key" Style="{StaticResource HotkeyBtnStyle}" Click="BtnProfile5Key_Click"/>
+                                        <Button Content="✕" Style="{StaticResource HotkeyBtnStyle}" MinWidth="32" Padding="4,7" Click="BtnProfile5KeyReset_Click" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Capture banner -->
+                            <Border x:Name="CaptureBanner" Visibility="Collapsed"
+                                    Background="#1A1A0A" CornerRadius="8"
+                                    BorderBrush="#5A5A20" BorderThickness="1"
+                                    Padding="14,10">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🎯" FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="CaptureHintText"
+                                               Text="Tekan tombol yang diinginkan…"
+                                               FontSize="13" Foreground="#C0C040"
+                                               VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                    <Button x:Name="BtnCancelCapture" Content="Batal" Style="{StaticResource HotkeyBtnStyle}"
+                                            Click="BtnCancelCapture_Click"
+                                            Margin="14,0,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

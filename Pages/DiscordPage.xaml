@@ -1,0 +1,97 @@
+<Page x:Class="RecoilHelper.Pages.DiscordPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      Title="DiscordPage" Background="#0D0D0F">
+
+    <Page.Resources>
+        <!-- Animasi Garasi Ke Atas -->
+        <Storyboard x:Key="GarageDoorUp">
+            <DoubleAnimation Storyboard.TargetName="MainContainer"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             To="-1000" Duration="0:0:0.8">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase Power="3" EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="MainContainer"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.6"/>
+        </Storyboard>
+    </Page.Resources>
+
+    <Grid x:Name="RootGrid" Background="#0D0D0F" ClipToBounds="True">
+        <Grid x:Name="MainContainer" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="0"/>
+            </Grid.RenderTransform>
+
+            <StackPanel Width="450" HorizontalAlignment="Center">
+                <!-- Discord Profile Area (Real-time) -->
+                <Grid Margin="0,0,0,32">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Border x:Name="AvatarBorder" Width="90" Height="90" CornerRadius="45" 
+                                Background="#1A1A2A" BorderBrush="#5865F2" BorderThickness="2"
+                                HorizontalAlignment="Center" Margin="0,0,0,16">
+                            <Grid>
+                                <Image x:Name="ImgAvatar" Stretch="UniformToFill">
+                                    <Image.Clip>
+                                        <EllipseGeometry Center="45,45" RadiusX="45" RadiusY="45"/>
+                                    </Image.Clip>
+                                </Image>
+                                <Image x:Name="TxtDefaultIcon" Source="/Assets/logo.png" 
+                                       Width="60" Height="60" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="Visible"/>
+                            </Grid>
+                        </Border>
+                        
+                        <TextBlock x:Name="TxtWelcome" Text="Hello, Gembeng!" FontSize="22" FontWeight="Bold" 
+                                   Foreground="White" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TxtStatus" Text="Republic Mabar Anti Bergetar" FontSize="12" 
+                                   Foreground="#5865F2" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="TxtJoinTitle" Text="Join discord Republic mabar" FontSize="26" FontWeight="Bold" 
+                           Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                
+                <TextBlock x:Name="TxtJoinDesc" Text="Dapatkan info update terbaru dan bergabung dengan komunitas kami." 
+                           FontSize="13" Foreground="#8080A0" TextWrapping="Wrap" 
+                           TextAlignment="Center" Margin="0,0,0,40" LineHeight="20"/>
+
+                <!-- Action Buttons -->
+                <Button x:Name="BtnJoin" Click="BtnJoin_Click"
+                        Background="#5865F2" Foreground="White" BorderThickness="0"
+                        Height="50" HorizontalAlignment="Stretch" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🔗" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtBtnJoin" Text="Join Discord Republic Mabar" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnEnter" Click="BtnEnter_Click"
+                        Background="#1A1B1E" Foreground="White" BorderBrush="#2A2B2F" BorderThickness="1"
+                        Height="50" HorizontalAlignment="Stretch" Margin="0,12,0,0" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🚀" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtBtnEnter" Text="Masuk ke Aplikasi" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBlock x:Name="TxtFooterInfo" Text="Informasi ini muncul setiap peluncuran aplikasi." 
+                           FontSize="11" Foreground="#3A3A5A" HorizontalAlignment="Center" Margin="0,32,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
