@@ -77,4 +77,4 @@ Segala bentuk kontribusi—baik itu perbaikan bug, penambahan fitur, terjemahan,
 
 ## 📜 Lisensi
 
-Proyek ini dibuat untuk keperluan utilitas permainan dan dibagikan dalam komunitas Republic Mabar. Harap gunakan dengan bijak dan sesuai dengan aturan komunitas atau game yang dimainkan (Terms of Service).
+Proyek ini dibuat untuk keperluan utilitas permainan dan dibagikan dalam komunitas Republic Mabar. Harap gunakan dengan bijak dan sesuai dengan aturan komunitas atau game yang dimainkan (Terms of Service). dan pstinya selalu gunakan prinsip DWYOR (Do With Your Own Risk).
