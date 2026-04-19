@@ -33,7 +33,7 @@ Sebelum mencoba atau mengkompilasi aplikasi ini, pastikan Anda telah memasang:
 1. **Kloning Repositori**
    Mulai dengan mengkloning repositori ini ke komputer lokal Anda:
    ```bash
-   git clone <URL_REPOSITORI_ANDA>
+   git clone https://github.com/akbartriagi/republic-mabar-anti-bergetar.git
    cd "REPUBLIC MABAR - ANTI BERGETAR"
    ```
 
